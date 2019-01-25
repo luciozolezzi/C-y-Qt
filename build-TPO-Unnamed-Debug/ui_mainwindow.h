@@ -19,6 +19,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
@@ -26,6 +27,7 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTimeEdit>
 #include <QtWidgets/QWidget>
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -35,61 +37,75 @@ public:
     QWidget *centralWidget;
     QTabWidget *tabWidget;
     QWidget *inicioTab;
-    QLabel *label;
+    QLabel *lblTitulo;
     QWidget *layoutWidget;
     QGridLayout *gridLayoutConnUart;
     QPushButton *btnConnUart;
     QLabel *lblConn;
     QLabel *lblConnUartStatus;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QGridLayout *gridLayoutState;
     QLabel *lblState;
     QLabel *lblStateShow;
+    QPushButton *btnParada;
+    QWidget *layoutWidget2;
+    QGridLayout *gridLayoutComando;
+    QPushButton *btnComando;
+    QLabel *lblComando;
+    QLineEdit *lineEditComando;
     QWidget *configuracionTab;
-    QWidget *widget1;
+    QWidget *layoutWidget3;
     QGridLayout *gridLayoutConfiguracion;
     QSlider *sldTemperatura;
-    QLabel *lblTemperatura;
     QLabel *lblHumedadS;
     QSlider *sldHumedadS;
     QSpinBox *spnHumedadS;
     QSpinBox *spnTemperatura;
-    QWidget *widget2;
+    QLabel *lblTemperatura;
+    QWidget *layoutWidget4;
     QGridLayout *gridLayoutConfigSend;
     QLabel *lblSendConf;
     QPushButton *btnSendConf;
     QWidget *calendarioTab;
-    QWidget *widget3;
+    QWidget *layoutWidget5;
     QGridLayout *gridLayoutCalendario;
     QLabel *lblCalendarioTitle;
     QDateTimeEdit *dateTimeEdit;
-    QWidget *widget4;
+    QWidget *layoutWidget6;
     QGridLayout *gridLayoutTiempo;
     QLabel *labelSetTiempo;
     QTimeEdit *timeEdit;
     QPushButton *btnEnviarRiego;
     QWidget *analiticaTab;
-    QWidget *widget5;
+    QWidget *layoutWidget7;
     QGridLayout *gridLayoutHumS;
     QLabel *lblHumedadSAnalitica;
     QLabel *lblHumedadSAnaliticaVal;
-    QWidget *widget6;
+    QWidget *layoutWidget8;
     QGridLayout *gridLayoutLum;
     QLabel *lblLumens;
     QLabel *lblLuminosidadAnaliticaVal;
-    QWidget *widget7;
+    QWidget *layoutWidget9;
     QGridLayout *gridLayoutHumA;
     QLabel *lblHumedadAmbiente;
     QLabel *lblHumedadAAnaliticaVal;
-    QWidget *widget8;
+    QWidget *layoutWidget10;
     QGridLayout *gridLayout;
     QLabel *lblTempAnalitica;
     QLabel *lblTemperaturaAnaliticaVal;
+    QCustomPlot *widgetPlotTemp;
+    QCustomPlot *widgetPlotHum;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
+        MainWindow->resize(525, 675);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setMinimumSize(QSize(525, 675));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
@@ -97,6 +113,8 @@ public:
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tabWidget->setEnabled(true);
         tabWidget->setGeometry(QRect(19, 10, 481, 600));
+        sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy);
         tabWidget->setMinimumSize(QSize(450, 600));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
@@ -159,14 +177,15 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush6);
         palette.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush);
         tabWidget->setPalette(palette);
+        tabWidget->setCursor(QCursor(Qt::PointingHandCursor));
         tabWidget->setAutoFillBackground(true);
         tabWidget->setLocale(QLocale(QLocale::Spanish, QLocale::Argentina));
         tabWidget->setMovable(false);
         inicioTab = new QWidget();
         inicioTab->setObjectName(QStringLiteral("inicioTab"));
-        label = new QLabel(inicioTab);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(0, 0, 469, 96));
+        lblTitulo = new QLabel(inicioTab);
+        lblTitulo->setObjectName(QStringLiteral("lblTitulo"));
+        lblTitulo->setGeometry(QRect(0, 0, 469, 96));
         layoutWidget = new QWidget(inicioTab);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 160, 461, 41));
@@ -264,95 +283,172 @@ public:
 
         gridLayoutConnUart->addWidget(lblConnUartStatus, 0, 1, 1, 1, Qt::AlignHCenter);
 
-        widget = new QWidget(inicioTab);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(10, 109, 461, 41));
-        gridLayoutState = new QGridLayout(widget);
+        layoutWidget1 = new QWidget(inicioTab);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(10, 109, 461, 41));
+        gridLayoutState = new QGridLayout(layoutWidget1);
         gridLayoutState->setSpacing(6);
         gridLayoutState->setContentsMargins(11, 11, 11, 11);
         gridLayoutState->setObjectName(QStringLiteral("gridLayoutState"));
+        gridLayoutState->setHorizontalSpacing(6);
         gridLayoutState->setContentsMargins(0, 0, 0, 0);
-        lblState = new QLabel(widget);
+        lblState = new QLabel(layoutWidget1);
         lblState->setObjectName(QStringLiteral("lblState"));
         lblState->setFont(font);
 
         gridLayoutState->addWidget(lblState, 0, 0, 1, 1);
 
-        lblStateShow = new QLabel(widget);
+        lblStateShow = new QLabel(layoutWidget1);
         lblStateShow->setObjectName(QStringLiteral("lblStateShow"));
         lblStateShow->setFont(font);
         lblStateShow->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayoutState->addWidget(lblStateShow, 0, 1, 1, 1);
 
+        btnParada = new QPushButton(inicioTab);
+        btnParada->setObjectName(QStringLiteral("btnParada"));
+        btnParada->setGeometry(QRect(360, 460, 111, 101));
+        QPalette palette2;
+        QBrush brush15(QColor(164, 0, 0, 255));
+        brush15.setStyle(Qt::SolidPattern);
+        palette2.setBrush(QPalette::Active, QPalette::Button, brush15);
+        palette2.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
+        palette2.setBrush(QPalette::Inactive, QPalette::Button, brush15);
+        palette2.setBrush(QPalette::Inactive, QPalette::ButtonText, brush1);
+        palette2.setBrush(QPalette::Disabled, QPalette::Button, brush15);
+        palette2.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
+        btnParada->setPalette(palette2);
+        QFont font2;
+        font2.setPointSize(12);
+        btnParada->setFont(font2);
+        btnParada->setCursor(QCursor(Qt::PointingHandCursor));
+        btnParada->setAutoDefault(false);
+        btnParada->setFlat(false);
+        layoutWidget2 = new QWidget(inicioTab);
+        layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(10, 210, 461, 41));
+        gridLayoutComando = new QGridLayout(layoutWidget2);
+        gridLayoutComando->setSpacing(6);
+        gridLayoutComando->setContentsMargins(11, 11, 11, 11);
+        gridLayoutComando->setObjectName(QStringLiteral("gridLayoutComando"));
+        gridLayoutComando->setSizeConstraint(QLayout::SetNoConstraint);
+        gridLayoutComando->setHorizontalSpacing(6);
+        gridLayoutComando->setContentsMargins(0, 0, 0, 0);
+        btnComando = new QPushButton(layoutWidget2);
+        btnComando->setObjectName(QStringLiteral("btnComando"));
+        btnComando->setEnabled(true);
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(btnComando->sizePolicy().hasHeightForWidth());
+        btnComando->setSizePolicy(sizePolicy1);
+        QPalette palette3;
+        palette3.setBrush(QPalette::Active, QPalette::Button, brush7);
+        palette3.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
+        palette3.setBrush(QPalette::Inactive, QPalette::Button, brush7);
+        palette3.setBrush(QPalette::Inactive, QPalette::ButtonText, brush1);
+        palette3.setBrush(QPalette::Disabled, QPalette::Button, brush7);
+        palette3.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
+        btnComando->setPalette(palette3);
+        btnComando->setFont(font);
+        btnComando->setCursor(QCursor(Qt::PointingHandCursor));
+
+        gridLayoutComando->addWidget(btnComando, 0, 2, 1, 1);
+
+        lblComando = new QLabel(layoutWidget2);
+        lblComando->setObjectName(QStringLiteral("lblComando"));
+        lblComando->setFont(font);
+
+        gridLayoutComando->addWidget(lblComando, 0, 0, 1, 1);
+
+        lineEditComando = new QLineEdit(layoutWidget2);
+        lineEditComando->setObjectName(QStringLiteral("lineEditComando"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(lineEditComando->sizePolicy().hasHeightForWidth());
+        lineEditComando->setSizePolicy(sizePolicy2);
+
+        gridLayoutComando->addWidget(lineEditComando, 0, 1, 1, 1);
+
         tabWidget->addTab(inicioTab, QString());
         configuracionTab = new QWidget();
         configuracionTab->setObjectName(QStringLiteral("configuracionTab"));
-        widget1 = new QWidget(configuracionTab);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        widget1->setGeometry(QRect(10, 10, 461, 101));
-        gridLayoutConfiguracion = new QGridLayout(widget1);
+        layoutWidget3 = new QWidget(configuracionTab);
+        layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
+        layoutWidget3->setGeometry(QRect(10, 10, 461, 101));
+        gridLayoutConfiguracion = new QGridLayout(layoutWidget3);
         gridLayoutConfiguracion->setSpacing(6);
         gridLayoutConfiguracion->setContentsMargins(11, 11, 11, 11);
         gridLayoutConfiguracion->setObjectName(QStringLiteral("gridLayoutConfiguracion"));
         gridLayoutConfiguracion->setContentsMargins(0, 0, 0, 0);
-        sldTemperatura = new QSlider(widget1);
+        sldTemperatura = new QSlider(layoutWidget3);
         sldTemperatura->setObjectName(QStringLiteral("sldTemperatura"));
+        sldTemperatura->setMinimum(-5);
+        sldTemperatura->setMaximum(45);
+        sldTemperatura->setValue(25);
         sldTemperatura->setOrientation(Qt::Horizontal);
 
         gridLayoutConfiguracion->addWidget(sldTemperatura, 0, 1, 1, 1);
 
-        lblTemperatura = new QLabel(widget1);
-        lblTemperatura->setObjectName(QStringLiteral("lblTemperatura"));
-
-        gridLayoutConfiguracion->addWidget(lblTemperatura, 0, 0, 1, 1);
-
-        lblHumedadS = new QLabel(widget1);
+        lblHumedadS = new QLabel(layoutWidget3);
         lblHumedadS->setObjectName(QStringLiteral("lblHumedadS"));
 
         gridLayoutConfiguracion->addWidget(lblHumedadS, 1, 0, 1, 1);
 
-        sldHumedadS = new QSlider(widget1);
+        sldHumedadS = new QSlider(layoutWidget3);
         sldHumedadS->setObjectName(QStringLiteral("sldHumedadS"));
+        sldHumedadS->setMaximum(100);
+        sldHumedadS->setValue(50);
         sldHumedadS->setOrientation(Qt::Horizontal);
 
         gridLayoutConfiguracion->addWidget(sldHumedadS, 1, 1, 1, 1);
 
-        spnHumedadS = new QSpinBox(widget1);
+        spnHumedadS = new QSpinBox(layoutWidget3);
         spnHumedadS->setObjectName(QStringLiteral("spnHumedadS"));
+        spnHumedadS->setMaximum(100);
+        spnHumedadS->setValue(50);
 
         gridLayoutConfiguracion->addWidget(spnHumedadS, 1, 2, 1, 1);
 
-        spnTemperatura = new QSpinBox(widget1);
+        spnTemperatura = new QSpinBox(layoutWidget3);
         spnTemperatura->setObjectName(QStringLiteral("spnTemperatura"));
+        spnTemperatura->setMinimum(-5);
+        spnTemperatura->setMaximum(45);
+        spnTemperatura->setValue(25);
 
         gridLayoutConfiguracion->addWidget(spnTemperatura, 0, 2, 1, 1);
 
-        widget2 = new QWidget(configuracionTab);
-        widget2->setObjectName(QStringLiteral("widget2"));
-        widget2->setGeometry(QRect(10, 120, 461, 38));
-        gridLayoutConfigSend = new QGridLayout(widget2);
+        lblTemperatura = new QLabel(layoutWidget3);
+        lblTemperatura->setObjectName(QStringLiteral("lblTemperatura"));
+
+        gridLayoutConfiguracion->addWidget(lblTemperatura, 0, 0, 1, 1);
+
+        layoutWidget4 = new QWidget(configuracionTab);
+        layoutWidget4->setObjectName(QStringLiteral("layoutWidget4"));
+        layoutWidget4->setGeometry(QRect(10, 120, 461, 38));
+        gridLayoutConfigSend = new QGridLayout(layoutWidget4);
         gridLayoutConfigSend->setSpacing(6);
         gridLayoutConfigSend->setContentsMargins(11, 11, 11, 11);
         gridLayoutConfigSend->setObjectName(QStringLiteral("gridLayoutConfigSend"));
         gridLayoutConfigSend->setContentsMargins(0, 0, 0, 0);
-        lblSendConf = new QLabel(widget2);
+        lblSendConf = new QLabel(layoutWidget4);
         lblSendConf->setObjectName(QStringLiteral("lblSendConf"));
 
         gridLayoutConfigSend->addWidget(lblSendConf, 0, 0, 1, 1);
 
-        btnSendConf = new QPushButton(widget2);
+        btnSendConf = new QPushButton(layoutWidget4);
         btnSendConf->setObjectName(QStringLiteral("btnSendConf"));
-        QPalette palette2;
-        palette2.setBrush(QPalette::Active, QPalette::Button, brush7);
-        palette2.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
-        palette2.setBrush(QPalette::Inactive, QPalette::Button, brush7);
-        palette2.setBrush(QPalette::Inactive, QPalette::ButtonText, brush1);
-        palette2.setBrush(QPalette::Disabled, QPalette::Button, brush7);
-        QBrush brush15(QColor(190, 190, 190, 255));
-        brush15.setStyle(Qt::SolidPattern);
-        palette2.setBrush(QPalette::Disabled, QPalette::ButtonText, brush15);
-        btnSendConf->setPalette(palette2);
+        QPalette palette4;
+        palette4.setBrush(QPalette::Active, QPalette::Button, brush7);
+        palette4.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
+        palette4.setBrush(QPalette::Inactive, QPalette::Button, brush7);
+        palette4.setBrush(QPalette::Inactive, QPalette::ButtonText, brush1);
+        palette4.setBrush(QPalette::Disabled, QPalette::Button, brush7);
+        QBrush brush16(QColor(190, 190, 190, 255));
+        brush16.setStyle(Qt::SolidPattern);
+        palette4.setBrush(QPalette::Disabled, QPalette::ButtonText, brush16);
+        btnSendConf->setPalette(palette4);
         btnSendConf->setFont(font);
         btnSendConf->setCursor(QCursor(Qt::PointingHandCursor));
         btnSendConf->setLayoutDirection(Qt::LeftToRight);
@@ -362,122 +458,122 @@ public:
         tabWidget->addTab(configuracionTab, QString());
         calendarioTab = new QWidget();
         calendarioTab->setObjectName(QStringLiteral("calendarioTab"));
-        widget3 = new QWidget(calendarioTab);
-        widget3->setObjectName(QStringLiteral("widget3"));
-        widget3->setGeometry(QRect(0, 0, 471, 91));
-        gridLayoutCalendario = new QGridLayout(widget3);
+        layoutWidget5 = new QWidget(calendarioTab);
+        layoutWidget5->setObjectName(QStringLiteral("layoutWidget5"));
+        layoutWidget5->setGeometry(QRect(0, 0, 471, 91));
+        gridLayoutCalendario = new QGridLayout(layoutWidget5);
         gridLayoutCalendario->setSpacing(6);
         gridLayoutCalendario->setContentsMargins(11, 11, 11, 11);
         gridLayoutCalendario->setObjectName(QStringLiteral("gridLayoutCalendario"));
         gridLayoutCalendario->setContentsMargins(0, 0, 0, 0);
-        lblCalendarioTitle = new QLabel(widget3);
+        lblCalendarioTitle = new QLabel(layoutWidget5);
         lblCalendarioTitle->setObjectName(QStringLiteral("lblCalendarioTitle"));
-        QPalette palette3;
-        palette3.setBrush(QPalette::Active, QPalette::WindowText, brush7);
-        palette3.setBrush(QPalette::Active, QPalette::Text, brush7);
-        palette3.setBrush(QPalette::Active, QPalette::ButtonText, brush7);
-        palette3.setBrush(QPalette::Inactive, QPalette::WindowText, brush7);
-        palette3.setBrush(QPalette::Inactive, QPalette::Text, brush7);
-        palette3.setBrush(QPalette::Inactive, QPalette::ButtonText, brush7);
-        palette3.setBrush(QPalette::Disabled, QPalette::WindowText, brush15);
-        palette3.setBrush(QPalette::Disabled, QPalette::Text, brush15);
-        palette3.setBrush(QPalette::Disabled, QPalette::ButtonText, brush15);
-        lblCalendarioTitle->setPalette(palette3);
+        QPalette palette5;
+        palette5.setBrush(QPalette::Active, QPalette::WindowText, brush7);
+        palette5.setBrush(QPalette::Active, QPalette::Text, brush7);
+        palette5.setBrush(QPalette::Active, QPalette::ButtonText, brush7);
+        palette5.setBrush(QPalette::Inactive, QPalette::WindowText, brush7);
+        palette5.setBrush(QPalette::Inactive, QPalette::Text, brush7);
+        palette5.setBrush(QPalette::Inactive, QPalette::ButtonText, brush7);
+        palette5.setBrush(QPalette::Disabled, QPalette::WindowText, brush16);
+        palette5.setBrush(QPalette::Disabled, QPalette::Text, brush16);
+        palette5.setBrush(QPalette::Disabled, QPalette::ButtonText, brush16);
+        lblCalendarioTitle->setPalette(palette5);
         lblCalendarioTitle->setFont(font);
 
         gridLayoutCalendario->addWidget(lblCalendarioTitle, 0, 0, 1, 1);
 
-        dateTimeEdit = new QDateTimeEdit(widget3);
+        dateTimeEdit = new QDateTimeEdit(layoutWidget5);
         dateTimeEdit->setObjectName(QStringLiteral("dateTimeEdit"));
-        QPalette palette4;
-        QBrush brush16(QColor(92, 53, 102, 255));
-        brush16.setStyle(Qt::SolidPattern);
-        palette4.setBrush(QPalette::Active, QPalette::WindowText, brush16);
-        palette4.setBrush(QPalette::Active, QPalette::Button, brush7);
-        QBrush brush17(QColor(117, 231, 9, 255));
+        QPalette palette6;
+        QBrush brush17(QColor(92, 53, 102, 255));
         brush17.setStyle(Qt::SolidPattern);
-        palette4.setBrush(QPalette::Active, QPalette::Light, brush17);
-        QBrush brush18(QColor(97, 192, 7, 255));
+        palette6.setBrush(QPalette::Active, QPalette::WindowText, brush17);
+        palette6.setBrush(QPalette::Active, QPalette::Button, brush7);
+        QBrush brush18(QColor(117, 231, 9, 255));
         brush18.setStyle(Qt::SolidPattern);
-        palette4.setBrush(QPalette::Active, QPalette::Midlight, brush18);
-        QBrush brush19(QColor(39, 77, 3, 255));
+        palette6.setBrush(QPalette::Active, QPalette::Light, brush18);
+        QBrush brush19(QColor(97, 192, 7, 255));
         brush19.setStyle(Qt::SolidPattern);
-        palette4.setBrush(QPalette::Active, QPalette::Dark, brush19);
-        QBrush brush20(QColor(52, 103, 4, 255));
+        palette6.setBrush(QPalette::Active, QPalette::Midlight, brush19);
+        QBrush brush20(QColor(39, 77, 3, 255));
         brush20.setStyle(Qt::SolidPattern);
-        palette4.setBrush(QPalette::Active, QPalette::Mid, brush20);
-        palette4.setBrush(QPalette::Active, QPalette::Text, brush16);
-        palette4.setBrush(QPalette::Active, QPalette::BrightText, brush2);
-        palette4.setBrush(QPalette::Active, QPalette::ButtonText, brush16);
-        palette4.setBrush(QPalette::Active, QPalette::Base, brush2);
-        palette4.setBrush(QPalette::Active, QPalette::Window, brush7);
-        palette4.setBrush(QPalette::Active, QPalette::Shadow, brush);
-        QBrush brush21(QColor(166, 204, 130, 255));
+        palette6.setBrush(QPalette::Active, QPalette::Dark, brush20);
+        QBrush brush21(QColor(52, 103, 4, 255));
         brush21.setStyle(Qt::SolidPattern);
-        palette4.setBrush(QPalette::Active, QPalette::AlternateBase, brush21);
-        palette4.setBrush(QPalette::Active, QPalette::ToolTipBase, brush6);
-        palette4.setBrush(QPalette::Active, QPalette::ToolTipText, brush);
-        palette4.setBrush(QPalette::Inactive, QPalette::WindowText, brush16);
-        palette4.setBrush(QPalette::Inactive, QPalette::Button, brush7);
-        palette4.setBrush(QPalette::Inactive, QPalette::Light, brush17);
-        palette4.setBrush(QPalette::Inactive, QPalette::Midlight, brush18);
-        palette4.setBrush(QPalette::Inactive, QPalette::Dark, brush19);
-        palette4.setBrush(QPalette::Inactive, QPalette::Mid, brush20);
-        palette4.setBrush(QPalette::Inactive, QPalette::Text, brush16);
-        palette4.setBrush(QPalette::Inactive, QPalette::BrightText, brush2);
-        palette4.setBrush(QPalette::Inactive, QPalette::ButtonText, brush16);
-        palette4.setBrush(QPalette::Inactive, QPalette::Base, brush2);
-        palette4.setBrush(QPalette::Inactive, QPalette::Window, brush7);
-        palette4.setBrush(QPalette::Inactive, QPalette::Shadow, brush);
-        palette4.setBrush(QPalette::Inactive, QPalette::AlternateBase, brush21);
-        palette4.setBrush(QPalette::Inactive, QPalette::ToolTipBase, brush6);
-        palette4.setBrush(QPalette::Inactive, QPalette::ToolTipText, brush);
-        palette4.setBrush(QPalette::Disabled, QPalette::WindowText, brush19);
-        palette4.setBrush(QPalette::Disabled, QPalette::Button, brush7);
-        palette4.setBrush(QPalette::Disabled, QPalette::Light, brush17);
-        palette4.setBrush(QPalette::Disabled, QPalette::Midlight, brush18);
-        palette4.setBrush(QPalette::Disabled, QPalette::Dark, brush19);
-        palette4.setBrush(QPalette::Disabled, QPalette::Mid, brush20);
-        palette4.setBrush(QPalette::Disabled, QPalette::Text, brush19);
-        palette4.setBrush(QPalette::Disabled, QPalette::BrightText, brush2);
-        palette4.setBrush(QPalette::Disabled, QPalette::ButtonText, brush19);
-        palette4.setBrush(QPalette::Disabled, QPalette::Base, brush7);
-        palette4.setBrush(QPalette::Disabled, QPalette::Window, brush7);
-        palette4.setBrush(QPalette::Disabled, QPalette::Shadow, brush);
-        palette4.setBrush(QPalette::Disabled, QPalette::AlternateBase, brush7);
-        palette4.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush6);
-        palette4.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush);
-        dateTimeEdit->setPalette(palette4);
+        palette6.setBrush(QPalette::Active, QPalette::Mid, brush21);
+        palette6.setBrush(QPalette::Active, QPalette::Text, brush17);
+        palette6.setBrush(QPalette::Active, QPalette::BrightText, brush2);
+        palette6.setBrush(QPalette::Active, QPalette::ButtonText, brush17);
+        palette6.setBrush(QPalette::Active, QPalette::Base, brush2);
+        palette6.setBrush(QPalette::Active, QPalette::Window, brush7);
+        palette6.setBrush(QPalette::Active, QPalette::Shadow, brush);
+        QBrush brush22(QColor(166, 204, 130, 255));
+        brush22.setStyle(Qt::SolidPattern);
+        palette6.setBrush(QPalette::Active, QPalette::AlternateBase, brush22);
+        palette6.setBrush(QPalette::Active, QPalette::ToolTipBase, brush6);
+        palette6.setBrush(QPalette::Active, QPalette::ToolTipText, brush);
+        palette6.setBrush(QPalette::Inactive, QPalette::WindowText, brush17);
+        palette6.setBrush(QPalette::Inactive, QPalette::Button, brush7);
+        palette6.setBrush(QPalette::Inactive, QPalette::Light, brush18);
+        palette6.setBrush(QPalette::Inactive, QPalette::Midlight, brush19);
+        palette6.setBrush(QPalette::Inactive, QPalette::Dark, brush20);
+        palette6.setBrush(QPalette::Inactive, QPalette::Mid, brush21);
+        palette6.setBrush(QPalette::Inactive, QPalette::Text, brush17);
+        palette6.setBrush(QPalette::Inactive, QPalette::BrightText, brush2);
+        palette6.setBrush(QPalette::Inactive, QPalette::ButtonText, brush17);
+        palette6.setBrush(QPalette::Inactive, QPalette::Base, brush2);
+        palette6.setBrush(QPalette::Inactive, QPalette::Window, brush7);
+        palette6.setBrush(QPalette::Inactive, QPalette::Shadow, brush);
+        palette6.setBrush(QPalette::Inactive, QPalette::AlternateBase, brush22);
+        palette6.setBrush(QPalette::Inactive, QPalette::ToolTipBase, brush6);
+        palette6.setBrush(QPalette::Inactive, QPalette::ToolTipText, brush);
+        palette6.setBrush(QPalette::Disabled, QPalette::WindowText, brush20);
+        palette6.setBrush(QPalette::Disabled, QPalette::Button, brush7);
+        palette6.setBrush(QPalette::Disabled, QPalette::Light, brush18);
+        palette6.setBrush(QPalette::Disabled, QPalette::Midlight, brush19);
+        palette6.setBrush(QPalette::Disabled, QPalette::Dark, brush20);
+        palette6.setBrush(QPalette::Disabled, QPalette::Mid, brush21);
+        palette6.setBrush(QPalette::Disabled, QPalette::Text, brush20);
+        palette6.setBrush(QPalette::Disabled, QPalette::BrightText, brush2);
+        palette6.setBrush(QPalette::Disabled, QPalette::ButtonText, brush20);
+        palette6.setBrush(QPalette::Disabled, QPalette::Base, brush7);
+        palette6.setBrush(QPalette::Disabled, QPalette::Window, brush7);
+        palette6.setBrush(QPalette::Disabled, QPalette::Shadow, brush);
+        palette6.setBrush(QPalette::Disabled, QPalette::AlternateBase, brush7);
+        palette6.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush6);
+        palette6.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush);
+        dateTimeEdit->setPalette(palette6);
         dateTimeEdit->setFont(font);
         dateTimeEdit->setCursor(QCursor(Qt::PointingHandCursor));
         dateTimeEdit->setAlignment(Qt::AlignCenter);
         dateTimeEdit->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
         dateTimeEdit->setAccelerated(false);
-        dateTimeEdit->setDateTime(QDateTime(QDate(2019, 1, 15), QTime(17, 0, 0)));
+        dateTimeEdit->setDateTime(QDateTime(QDate(2019, 1, 15), QTime(23, 0, 0)));
         dateTimeEdit->setDate(QDate(2019, 1, 15));
-        dateTimeEdit->setTime(QTime(17, 0, 0));
-        dateTimeEdit->setMaximumDate(QDate(7999, 12, 31));
+        dateTimeEdit->setTime(QTime(23, 0, 0));
+        dateTimeEdit->setMaximumDate(QDate(8000, 1, 1));
         dateTimeEdit->setCurrentSection(QDateTimeEdit::HourSection);
         dateTimeEdit->setCalendarPopup(true);
         dateTimeEdit->setTimeSpec(Qt::UTC);
 
         gridLayoutCalendario->addWidget(dateTimeEdit, 1, 0, 1, 1);
 
-        widget4 = new QWidget(calendarioTab);
-        widget4->setObjectName(QStringLiteral("widget4"));
-        widget4->setGeometry(QRect(0, 520, 471, 41));
-        gridLayoutTiempo = new QGridLayout(widget4);
+        layoutWidget6 = new QWidget(calendarioTab);
+        layoutWidget6->setObjectName(QStringLiteral("layoutWidget6"));
+        layoutWidget6->setGeometry(QRect(0, 520, 471, 41));
+        gridLayoutTiempo = new QGridLayout(layoutWidget6);
         gridLayoutTiempo->setSpacing(6);
         gridLayoutTiempo->setContentsMargins(11, 11, 11, 11);
         gridLayoutTiempo->setObjectName(QStringLiteral("gridLayoutTiempo"));
         gridLayoutTiempo->setContentsMargins(0, 0, 0, 0);
-        labelSetTiempo = new QLabel(widget4);
+        labelSetTiempo = new QLabel(layoutWidget6);
         labelSetTiempo->setObjectName(QStringLiteral("labelSetTiempo"));
         labelSetTiempo->setFont(font);
 
         gridLayoutTiempo->addWidget(labelSetTiempo, 0, 0, 1, 1);
 
-        timeEdit = new QTimeEdit(widget4);
+        timeEdit = new QTimeEdit(layoutWidget6);
         timeEdit->setObjectName(QStringLiteral("timeEdit"));
         timeEdit->setFont(font);
 #ifndef QT_NO_TOOLTIP
@@ -488,16 +584,16 @@ public:
 
         gridLayoutTiempo->addWidget(timeEdit, 0, 1, 1, 1);
 
-        btnEnviarRiego = new QPushButton(widget4);
+        btnEnviarRiego = new QPushButton(layoutWidget6);
         btnEnviarRiego->setObjectName(QStringLiteral("btnEnviarRiego"));
-        QPalette palette5;
-        palette5.setBrush(QPalette::Active, QPalette::Button, brush7);
-        palette5.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
-        palette5.setBrush(QPalette::Inactive, QPalette::Button, brush7);
-        palette5.setBrush(QPalette::Inactive, QPalette::ButtonText, brush1);
-        palette5.setBrush(QPalette::Disabled, QPalette::Button, brush7);
-        palette5.setBrush(QPalette::Disabled, QPalette::ButtonText, brush15);
-        btnEnviarRiego->setPalette(palette5);
+        QPalette palette7;
+        palette7.setBrush(QPalette::Active, QPalette::Button, brush7);
+        palette7.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
+        palette7.setBrush(QPalette::Inactive, QPalette::Button, brush7);
+        palette7.setBrush(QPalette::Inactive, QPalette::ButtonText, brush1);
+        palette7.setBrush(QPalette::Disabled, QPalette::Button, brush7);
+        palette7.setBrush(QPalette::Disabled, QPalette::ButtonText, brush16);
+        btnEnviarRiego->setPalette(palette7);
         btnEnviarRiego->setFont(font);
         btnEnviarRiego->setCursor(QCursor(Qt::PointingHandCursor));
 
@@ -506,59 +602,16 @@ public:
         tabWidget->addTab(calendarioTab, QString());
         analiticaTab = new QWidget();
         analiticaTab->setObjectName(QStringLiteral("analiticaTab"));
-        widget5 = new QWidget(analiticaTab);
-        widget5->setObjectName(QStringLiteral("widget5"));
-        widget5->setGeometry(QRect(0, 430, 471, 31));
-        gridLayoutHumS = new QGridLayout(widget5);
+        layoutWidget7 = new QWidget(analiticaTab);
+        layoutWidget7->setObjectName(QStringLiteral("layoutWidget7"));
+        layoutWidget7->setGeometry(QRect(0, 430, 471, 31));
+        gridLayoutHumS = new QGridLayout(layoutWidget7);
         gridLayoutHumS->setSpacing(6);
         gridLayoutHumS->setContentsMargins(11, 11, 11, 11);
         gridLayoutHumS->setObjectName(QStringLiteral("gridLayoutHumS"));
         gridLayoutHumS->setContentsMargins(0, 0, 0, 0);
-        lblHumedadSAnalitica = new QLabel(widget5);
+        lblHumedadSAnalitica = new QLabel(layoutWidget7);
         lblHumedadSAnalitica->setObjectName(QStringLiteral("lblHumedadSAnalitica"));
-        QPalette palette6;
-        palette6.setBrush(QPalette::Active, QPalette::WindowText, brush7);
-        palette6.setBrush(QPalette::Active, QPalette::Text, brush7);
-        palette6.setBrush(QPalette::Active, QPalette::ButtonText, brush7);
-        palette6.setBrush(QPalette::Inactive, QPalette::WindowText, brush7);
-        palette6.setBrush(QPalette::Inactive, QPalette::Text, brush7);
-        palette6.setBrush(QPalette::Inactive, QPalette::ButtonText, brush7);
-        palette6.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
-        palette6.setBrush(QPalette::Disabled, QPalette::Text, brush4);
-        palette6.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblHumedadSAnalitica->setPalette(palette6);
-        lblHumedadSAnalitica->setFont(font);
-
-        gridLayoutHumS->addWidget(lblHumedadSAnalitica, 0, 0, 1, 1);
-
-        lblHumedadSAnaliticaVal = new QLabel(widget5);
-        lblHumedadSAnaliticaVal->setObjectName(QStringLiteral("lblHumedadSAnaliticaVal"));
-        QPalette palette7;
-        palette7.setBrush(QPalette::Active, QPalette::WindowText, brush7);
-        palette7.setBrush(QPalette::Active, QPalette::Text, brush7);
-        palette7.setBrush(QPalette::Active, QPalette::ButtonText, brush7);
-        palette7.setBrush(QPalette::Inactive, QPalette::WindowText, brush7);
-        palette7.setBrush(QPalette::Inactive, QPalette::Text, brush7);
-        palette7.setBrush(QPalette::Inactive, QPalette::ButtonText, brush7);
-        palette7.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
-        palette7.setBrush(QPalette::Disabled, QPalette::Text, brush4);
-        palette7.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblHumedadSAnaliticaVal->setPalette(palette7);
-        lblHumedadSAnaliticaVal->setFont(font);
-        lblHumedadSAnaliticaVal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        gridLayoutHumS->addWidget(lblHumedadSAnaliticaVal, 0, 1, 1, 1);
-
-        widget6 = new QWidget(analiticaTab);
-        widget6->setObjectName(QStringLiteral("widget6"));
-        widget6->setGeometry(QRect(0, 490, 471, 31));
-        gridLayoutLum = new QGridLayout(widget6);
-        gridLayoutLum->setSpacing(6);
-        gridLayoutLum->setContentsMargins(11, 11, 11, 11);
-        gridLayoutLum->setObjectName(QStringLiteral("gridLayoutLum"));
-        gridLayoutLum->setContentsMargins(0, 0, 0, 0);
-        lblLumens = new QLabel(widget6);
-        lblLumens->setObjectName(QStringLiteral("lblLumens"));
         QPalette palette8;
         palette8.setBrush(QPalette::Active, QPalette::WindowText, brush7);
         palette8.setBrush(QPalette::Active, QPalette::Text, brush7);
@@ -569,13 +622,13 @@ public:
         palette8.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
         palette8.setBrush(QPalette::Disabled, QPalette::Text, brush4);
         palette8.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblLumens->setPalette(palette8);
-        lblLumens->setFont(font);
+        lblHumedadSAnalitica->setPalette(palette8);
+        lblHumedadSAnalitica->setFont(font);
 
-        gridLayoutLum->addWidget(lblLumens, 0, 0, 1, 1);
+        gridLayoutHumS->addWidget(lblHumedadSAnalitica, 0, 0, 1, 1);
 
-        lblLuminosidadAnaliticaVal = new QLabel(widget6);
-        lblLuminosidadAnaliticaVal->setObjectName(QStringLiteral("lblLuminosidadAnaliticaVal"));
+        lblHumedadSAnaliticaVal = new QLabel(layoutWidget7);
+        lblHumedadSAnaliticaVal->setObjectName(QStringLiteral("lblHumedadSAnaliticaVal"));
         QPalette palette9;
         palette9.setBrush(QPalette::Active, QPalette::WindowText, brush7);
         palette9.setBrush(QPalette::Active, QPalette::Text, brush7);
@@ -586,22 +639,22 @@ public:
         palette9.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
         palette9.setBrush(QPalette::Disabled, QPalette::Text, brush4);
         palette9.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblLuminosidadAnaliticaVal->setPalette(palette9);
-        lblLuminosidadAnaliticaVal->setFont(font);
-        lblLuminosidadAnaliticaVal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        lblHumedadSAnaliticaVal->setPalette(palette9);
+        lblHumedadSAnaliticaVal->setFont(font);
+        lblHumedadSAnaliticaVal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayoutLum->addWidget(lblLuminosidadAnaliticaVal, 0, 1, 1, 1);
+        gridLayoutHumS->addWidget(lblHumedadSAnaliticaVal, 0, 1, 1, 1);
 
-        widget7 = new QWidget(analiticaTab);
-        widget7->setObjectName(QStringLiteral("widget7"));
-        widget7->setGeometry(QRect(0, 460, 471, 31));
-        gridLayoutHumA = new QGridLayout(widget7);
-        gridLayoutHumA->setSpacing(6);
-        gridLayoutHumA->setContentsMargins(11, 11, 11, 11);
-        gridLayoutHumA->setObjectName(QStringLiteral("gridLayoutHumA"));
-        gridLayoutHumA->setContentsMargins(0, 0, 0, 0);
-        lblHumedadAmbiente = new QLabel(widget7);
-        lblHumedadAmbiente->setObjectName(QStringLiteral("lblHumedadAmbiente"));
+        layoutWidget8 = new QWidget(analiticaTab);
+        layoutWidget8->setObjectName(QStringLiteral("layoutWidget8"));
+        layoutWidget8->setGeometry(QRect(0, 490, 471, 31));
+        gridLayoutLum = new QGridLayout(layoutWidget8);
+        gridLayoutLum->setSpacing(6);
+        gridLayoutLum->setContentsMargins(11, 11, 11, 11);
+        gridLayoutLum->setObjectName(QStringLiteral("gridLayoutLum"));
+        gridLayoutLum->setContentsMargins(0, 0, 0, 0);
+        lblLumens = new QLabel(layoutWidget8);
+        lblLumens->setObjectName(QStringLiteral("lblLumens"));
         QPalette palette10;
         palette10.setBrush(QPalette::Active, QPalette::WindowText, brush7);
         palette10.setBrush(QPalette::Active, QPalette::Text, brush7);
@@ -612,13 +665,13 @@ public:
         palette10.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
         palette10.setBrush(QPalette::Disabled, QPalette::Text, brush4);
         palette10.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblHumedadAmbiente->setPalette(palette10);
-        lblHumedadAmbiente->setFont(font);
+        lblLumens->setPalette(palette10);
+        lblLumens->setFont(font);
 
-        gridLayoutHumA->addWidget(lblHumedadAmbiente, 0, 0, 1, 1);
+        gridLayoutLum->addWidget(lblLumens, 0, 0, 1, 1);
 
-        lblHumedadAAnaliticaVal = new QLabel(widget7);
-        lblHumedadAAnaliticaVal->setObjectName(QStringLiteral("lblHumedadAAnaliticaVal"));
+        lblLuminosidadAnaliticaVal = new QLabel(layoutWidget8);
+        lblLuminosidadAnaliticaVal->setObjectName(QStringLiteral("lblLuminosidadAnaliticaVal"));
         QPalette palette11;
         palette11.setBrush(QPalette::Active, QPalette::WindowText, brush7);
         palette11.setBrush(QPalette::Active, QPalette::Text, brush7);
@@ -629,22 +682,22 @@ public:
         palette11.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
         palette11.setBrush(QPalette::Disabled, QPalette::Text, brush4);
         palette11.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblHumedadAAnaliticaVal->setPalette(palette11);
-        lblHumedadAAnaliticaVal->setFont(font);
-        lblHumedadAAnaliticaVal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        lblLuminosidadAnaliticaVal->setPalette(palette11);
+        lblLuminosidadAnaliticaVal->setFont(font);
+        lblLuminosidadAnaliticaVal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        gridLayoutHumA->addWidget(lblHumedadAAnaliticaVal, 0, 1, 1, 1);
+        gridLayoutLum->addWidget(lblLuminosidadAnaliticaVal, 0, 1, 1, 1);
 
-        widget8 = new QWidget(analiticaTab);
-        widget8->setObjectName(QStringLiteral("widget8"));
-        widget8->setGeometry(QRect(0, 400, 471, 31));
-        gridLayout = new QGridLayout(widget8);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        lblTempAnalitica = new QLabel(widget8);
-        lblTempAnalitica->setObjectName(QStringLiteral("lblTempAnalitica"));
+        layoutWidget9 = new QWidget(analiticaTab);
+        layoutWidget9->setObjectName(QStringLiteral("layoutWidget9"));
+        layoutWidget9->setGeometry(QRect(0, 460, 471, 31));
+        gridLayoutHumA = new QGridLayout(layoutWidget9);
+        gridLayoutHumA->setSpacing(6);
+        gridLayoutHumA->setContentsMargins(11, 11, 11, 11);
+        gridLayoutHumA->setObjectName(QStringLiteral("gridLayoutHumA"));
+        gridLayoutHumA->setContentsMargins(0, 0, 0, 0);
+        lblHumedadAmbiente = new QLabel(layoutWidget9);
+        lblHumedadAmbiente->setObjectName(QStringLiteral("lblHumedadAmbiente"));
         QPalette palette12;
         palette12.setBrush(QPalette::Active, QPalette::WindowText, brush7);
         palette12.setBrush(QPalette::Active, QPalette::Text, brush7);
@@ -655,13 +708,13 @@ public:
         palette12.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
         palette12.setBrush(QPalette::Disabled, QPalette::Text, brush4);
         palette12.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblTempAnalitica->setPalette(palette12);
-        lblTempAnalitica->setFont(font);
+        lblHumedadAmbiente->setPalette(palette12);
+        lblHumedadAmbiente->setFont(font);
 
-        gridLayout->addWidget(lblTempAnalitica, 0, 0, 1, 1);
+        gridLayoutHumA->addWidget(lblHumedadAmbiente, 0, 0, 1, 1);
 
-        lblTemperaturaAnaliticaVal = new QLabel(widget8);
-        lblTemperaturaAnaliticaVal->setObjectName(QStringLiteral("lblTemperaturaAnaliticaVal"));
+        lblHumedadAAnaliticaVal = new QLabel(layoutWidget9);
+        lblHumedadAAnaliticaVal->setObjectName(QStringLiteral("lblHumedadAAnaliticaVal"));
         QPalette palette13;
         palette13.setBrush(QPalette::Active, QPalette::WindowText, brush7);
         palette13.setBrush(QPalette::Active, QPalette::Text, brush7);
@@ -672,18 +725,72 @@ public:
         palette13.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
         palette13.setBrush(QPalette::Disabled, QPalette::Text, brush4);
         palette13.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        lblTemperaturaAnaliticaVal->setPalette(palette13);
+        lblHumedadAAnaliticaVal->setPalette(palette13);
+        lblHumedadAAnaliticaVal->setFont(font);
+        lblHumedadAAnaliticaVal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        gridLayoutHumA->addWidget(lblHumedadAAnaliticaVal, 0, 1, 1, 1);
+
+        layoutWidget10 = new QWidget(analiticaTab);
+        layoutWidget10->setObjectName(QStringLiteral("layoutWidget10"));
+        layoutWidget10->setGeometry(QRect(0, 400, 471, 31));
+        gridLayout = new QGridLayout(layoutWidget10);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        lblTempAnalitica = new QLabel(layoutWidget10);
+        lblTempAnalitica->setObjectName(QStringLiteral("lblTempAnalitica"));
+        QPalette palette14;
+        palette14.setBrush(QPalette::Active, QPalette::WindowText, brush7);
+        palette14.setBrush(QPalette::Active, QPalette::Text, brush7);
+        palette14.setBrush(QPalette::Active, QPalette::ButtonText, brush7);
+        palette14.setBrush(QPalette::Inactive, QPalette::WindowText, brush7);
+        palette14.setBrush(QPalette::Inactive, QPalette::Text, brush7);
+        palette14.setBrush(QPalette::Inactive, QPalette::ButtonText, brush7);
+        palette14.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
+        palette14.setBrush(QPalette::Disabled, QPalette::Text, brush4);
+        palette14.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
+        lblTempAnalitica->setPalette(palette14);
+        lblTempAnalitica->setFont(font);
+
+        gridLayout->addWidget(lblTempAnalitica, 0, 0, 1, 1);
+
+        lblTemperaturaAnaliticaVal = new QLabel(layoutWidget10);
+        lblTemperaturaAnaliticaVal->setObjectName(QStringLiteral("lblTemperaturaAnaliticaVal"));
+        QPalette palette15;
+        palette15.setBrush(QPalette::Active, QPalette::WindowText, brush7);
+        palette15.setBrush(QPalette::Active, QPalette::Text, brush7);
+        palette15.setBrush(QPalette::Active, QPalette::ButtonText, brush7);
+        palette15.setBrush(QPalette::Inactive, QPalette::WindowText, brush7);
+        palette15.setBrush(QPalette::Inactive, QPalette::Text, brush7);
+        palette15.setBrush(QPalette::Inactive, QPalette::ButtonText, brush7);
+        palette15.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
+        palette15.setBrush(QPalette::Disabled, QPalette::Text, brush4);
+        palette15.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
+        lblTemperaturaAnaliticaVal->setPalette(palette15);
         lblTemperaturaAnaliticaVal->setFont(font);
         lblTemperaturaAnaliticaVal->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout->addWidget(lblTemperaturaAnaliticaVal, 0, 1, 1, 1);
 
+        widgetPlotTemp = new QCustomPlot(analiticaTab);
+        widgetPlotTemp->setObjectName(QStringLiteral("widgetPlotTemp"));
+        widgetPlotTemp->setGeometry(QRect(10, 10, 450, 175));
+        widgetPlotHum = new QCustomPlot(analiticaTab);
+        widgetPlotHum->setObjectName(QStringLiteral("widgetPlotHum"));
+        widgetPlotHum->setGeometry(QRect(10, 200, 450, 175));
         tabWidget->addTab(analiticaTab, QString());
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
+        QObject::connect(sldTemperatura, SIGNAL(valueChanged(int)), spnTemperatura, SLOT(setValue(int)));
+        QObject::connect(sldHumedadS, SIGNAL(valueChanged(int)), spnHumedadS, SLOT(setValue(int)));
+        QObject::connect(spnTemperatura, SIGNAL(valueChanged(int)), sldTemperatura, SLOT(setValue(int)));
+        QObject::connect(spnHumedadS, SIGNAL(valueChanged(int)), sldHumedadS, SLOT(setValue(int)));
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
+        btnParada->setDefault(false);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -692,20 +799,24 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; color:#4e9a06;\">Sistema Inteligente de Riego<br/>TPO 2018<br/>Lucio Zolezzi</span></p></body></html>", Q_NULLPTR));
+        lblTitulo->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt; color:#4e9a06;\">Sistema Inteligente de Riego<br/>TPO 2018<br/>Lucio Zolezzi</span></p></body></html>", Q_NULLPTR));
         btnConnUart->setText(QApplication::translate("MainWindow", "Conectar", Q_NULLPTR));
         lblConn->setText(QApplication::translate("MainWindow", "Conectar via UART", Q_NULLPTR));
         lblConnUartStatus->setText(QString());
-        lblState->setText(QApplication::translate("MainWindow", "Estado Invernadero:", Q_NULLPTR));
+        lblState->setText(QApplication::translate("MainWindow", "Estado Invernadero", Q_NULLPTR));
         lblStateShow->setText(QString());
+        btnParada->setText(QApplication::translate("MainWindow", "PARADA\n"
+"EMERGENCIA", Q_NULLPTR));
+        btnComando->setText(QApplication::translate("MainWindow", "Enviar", Q_NULLPTR));
+        lblComando->setText(QApplication::translate("MainWindow", "Comando", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(inicioTab), QApplication::translate("MainWindow", "Inicio", Q_NULLPTR));
-        lblTemperatura->setText(QApplication::translate("MainWindow", "Temperatura", Q_NULLPTR));
         lblHumedadS->setText(QApplication::translate("MainWindow", "Humedad Suelo", Q_NULLPTR));
+        lblTemperatura->setText(QApplication::translate("MainWindow", "Temperatura", Q_NULLPTR));
         lblSendConf->setText(QString());
         btnSendConf->setText(QApplication::translate("MainWindow", "Enviar", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(configuracionTab), QApplication::translate("MainWindow", "Configuracion", Q_NULLPTR));
         lblCalendarioTitle->setText(QApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" text-decoration: underline;\">Calendario de riego</span></p></body></html>", Q_NULLPTR));
-        labelSetTiempo->setText(QApplication::translate("MainWindow", "Tiempo de riego: ", Q_NULLPTR));
+        labelSetTiempo->setText(QApplication::translate("MainWindow", "Tiempo de riego (Hs)", Q_NULLPTR));
         btnEnviarRiego->setText(QApplication::translate("MainWindow", "Enviar", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(calendarioTab), QApplication::translate("MainWindow", "Calendario", Q_NULLPTR));
         lblHumedadSAnalitica->setText(QApplication::translate("MainWindow", "Humedad Suelo", Q_NULLPTR));
